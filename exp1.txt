@@ -1,0 +1,29 @@
+clc;
+close all;
+clear all;
+a=[1 2 .02+.06j .03j
+1 3 0.008j+.24j .025j
+2 3 0.06+.18j .02j
+2 4 0.06+.18j .02j
+2 5 0.04+.12j .015j
+3 4 0.01+.03j .01j
+3 5 0.08+.24j .025j ]
+sb=a(:,1)
+eb=a(:,2)
+z=a(:,3)
+y=1./z
+hc=a(:,4)
+sb1=max(sb)
+eb1=max(eb)
+bus=max(sb1,eb1)
+line=size(a,1)
+ybus=zeros(bus,bus)
+for i=1:line
+p=sb(i)
+q=eb(i)
+ybus(p,p)=ybus(p,p)+y(i)+hc(i)
+ybus(q,q)=ybus(q,q)+y(i)+hc(i)
+ybus(p,q)=ybus(p,q)-y(i)
+ybus(q,p)=ybus(p,q)
+end
+disp(ybus)
