@@ -1,0 +1,26 @@
+clc;
+clear all;
+vbus=[1.05+0j
+0.98-0.06j
+1-0.05j]
+ybus=[0 -10+20j -10+30j
+-10+20j 0 -16+32j
+-10+30j -16+32j 0 ]
+n=length(ybus)
+Sp=zeros(n,n)
+for i=1:n
+for k=1:n
+if i==k
+continue
+else
+I(i,k)=-ybus(i,k)*(vbus(i)-vbus(k));
+I(k,i)=-I(i,k)
+S(i,k)=vbus(i)*conj(I(i,k))
+S(k,i)=vbus(k)*conj(I(k,i))
+Sl(i,k)=S(i,k)+S(k,i)
+Sp(i,i)=Sp(i,i)+S(i,k)
+end
+end
+end
+Sbus=[Sp(1,1);Sp(2,2);Sp(3,3)]
+Ibus=conj(Sbus./vbus)
